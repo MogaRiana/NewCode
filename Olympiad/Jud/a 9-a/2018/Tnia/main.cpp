@@ -52,8 +52,12 @@ int main() {
     if (x1 && x2 && y1 && y2) {
       res = pref[x2][y2] - pref[x1 - 1][y2] - pref[x2][y1 - 1] +
             pref[x1 - 1][y1 - 1];
-    } else {
+    } else if (x1 == 0 && y1 == 0) {
       res = pref[x2][y2];
+    } else if (y1 == 0) {
+      res = pref[x2][y2] - pref[x1 - 1][y2];
+    } else if (x1 == 0) {
+      res = pref[x2][y2] - pref[x2][y1 - 1];
     }
 
     cout << res << endl;

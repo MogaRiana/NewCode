@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 
+// #define endl '/n';
 using namespace std;
 typedef long long i64;
 typedef int i32;
@@ -11,29 +12,29 @@ int main() {
   ifstream cin{"tnia.in"};
   ofstream cout{"tnia.out"};
 
-  i32 n, m, q;
+  i64 n, m, q;
   cin >> n >> m;
 
-  vector<vector<i16>> pref(m, vector<i16>(n, 0));
+  vector<vector<i64>> pref(m, vector<i64>(n, 0));
 
-  for (i32 i = 0; i < n; i++) {
-    i32 h;
+  for (i64 i = 0; i < n; i++) {
+    i64 h;
     cin >> h;
 
-    for (i32 j = 0; j < h; j++) {
+    for (i64 j = 0; j < h; j++) {
       pref[j][i] = 1;
     }
   }
 
-  for (i32 i = 1; i < m; i++) {
+  for (i64 i = 1; i < m; i++) {
     pref[i][0] += pref[i - 1][0];
   }
-  for (i32 j = 1; j < n; j++) {
+  for (i64 j = 1; j < n; j++) {
     pref[0][j] += pref[0][j - 1];
   }
 
-  for (i32 i = 1; i < m; i++) {
-    for (i32 j = 1; j < n; j++) {
+  for (i64 i = 1; i < m; i++) {
+    for (i64 j = 1; j < n; j++) {
       pref[i][j] =
           pref[i - 1][j] + pref[i][j - 1] - pref[i - 1][j - 1] + pref[i][j];
     }
@@ -41,7 +42,7 @@ int main() {
 
   cin >> q;
   while (q--) {
-    i32 x1, y1, x2, y2, res;
+    i64 x1, y1, x2, y2, res;
     cin >> y1 >> x1 >> y2 >> x2;
 
     x1--;

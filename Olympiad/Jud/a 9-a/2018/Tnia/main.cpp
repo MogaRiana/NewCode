@@ -14,23 +14,16 @@ int main() {
   i32 n, m, q;
   cin >> n >> m;
 
-  vector<i32> h(n);
+  vector<vector<i16>> pref(m, vector<i16>(n, 0));
 
   for (i32 i = 0; i < n; i++) {
-    cin >> h[i];
-  }
+    i32 h;
+    cin >> h;
 
-  cin >> q;
-
-  vector<vector<i32>> v(m, vector<i32>(n, 0));
-
-  for (i32 i = 0; i < n; i++) {
-    for (i32 j = 0; j < h[i]; j++) {
-      v[j][i] = 1;
+    for (i32 j = 0; j < h; j++) {
+      pref[j][i] = 1;
     }
   }
-
-  vector<vector<i32>> pref = v;
 
   for (i32 i = 1; i < m; i++) {
     pref[i][0] += pref[i - 1][0];
@@ -42,10 +35,11 @@ int main() {
   for (i32 i = 1; i < m; i++) {
     for (i32 j = 1; j < n; j++) {
       pref[i][j] =
-          pref[i - 1][j] + pref[i][j - 1] - pref[i - 1][j - 1] + v[i][j];
+          pref[i - 1][j] + pref[i][j - 1] - pref[i - 1][j - 1] + pref[i][j];
     }
   }
 
+  cin >> q;
   while (q--) {
     i32 x1, y1, x2, y2, res;
     cin >> y1 >> x1 >> y2 >> x2;

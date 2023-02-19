@@ -18,7 +18,7 @@ int main() {
   for (i64 i = 1; i < s; i++) {
     if (abs(v[i] - v[i - 1]) <= k) {
       crtt++;
-      if (crtt > 3) {
+      if (crtt > c) {
         crtm++;
         crtt = 1;
       }

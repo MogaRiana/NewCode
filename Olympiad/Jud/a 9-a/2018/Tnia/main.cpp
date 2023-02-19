@@ -1,14 +1,15 @@
 #include <bits/stdc++.h>
 
-// #define endl '/n';
 using namespace std;
 typedef long long i64;
 typedef int i32;
 typedef short i16;
 typedef vector<i64> vi64;
 typedef vector<vi64> vv;
+#define endl '\n'
 
 int main() {
+  // 41 puncte
   ifstream cin{"tnia.in"};
   ofstream cout{"tnia.out"};
 

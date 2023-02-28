@@ -6,41 +6,40 @@ typedef int i32;
 typedef short i16;
 typedef vector<i64> vi64;
 typedef vector<vi64> vv;
-typedef string str;
 
 int main() {
-  i64 n, x = 0, k = 0, l = 1;
-  str s;
-  bool ok = true;
+  i64 n, len = 1, i = 0, c, l = 1;
+  string s;
+  bool ok = true, found = false;
   cin >> n >> s;
 
-  for (i64 i = 0; i < s.size() - x; i += x + 1) {
-    i64 a = s[i] - 48;
-
-    if (k == 9 && ok) {
-      x++;
-      k = 0;
-      ok = false;
+  while (i < s.size()) {
+    if (len == 1) {
+      c = s[i++] - '0';
+      if (c == 9) {
+        len = 2;
+      }
+    } else if (len == 2) {
+      c = (s[i++] - '0') * 10;
+      c += s[i++] - '0';
+      if (c == 99) {
+        len == 3;
+      }
+    } else {
+      c = (s[i++] - '0') * 100;
+      c += (s[i++] - '0') * 10;
+      c += s[i++] - '0';
     }
-    if (k == 89) {
-      x++;
-    }
-
-    if (x == 1) {
-      i64 b = s[i + 1] - 48;
-      a = (a * 10) + b;
-    } else if (x == 2) {
-      a = 100;
-    }
-
-    k++;
-
-    if (a != l) {
+    if (c != l) {
       cout << l << endl;
-      return 0;
+      found = true;
+      break;
     }
-
     l++;
+  }
+
+  if (!found) {
+    cout << l << endl;
   }
 
   return 0;

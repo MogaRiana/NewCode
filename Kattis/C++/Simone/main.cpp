@@ -13,7 +13,7 @@ int main() {
   i64 n, k;
   cin >> n >> k;
 
-  i64 minc = k + 1;
+  i64 minc = 1e9;
   vi64 c(k + 1, 0);
 
   for (i64 i = 0; i < n; i++) {

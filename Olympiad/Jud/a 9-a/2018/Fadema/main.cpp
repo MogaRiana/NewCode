@@ -43,7 +43,7 @@ bool corners(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i,
       ok[k][i]++;
     }
     if (v[k][i] != v[k][i + 1]) {
-      ok[k][i];
+      ok[k][i]++;
     }
     if (ok[k][i] == 2) {
       cool3 = true;
@@ -62,6 +62,51 @@ bool corners(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i,
       cool4 = true;
     } else {
       cool4 = false;
+    }
+  } else if (j - i > 0 && k - l == 0) {
+    cool3 = true;
+    cool4 = true;
+
+    // up-left-corner
+    if (v[l][i] != v[l][i + 1]) {
+      ok[l][i]++;
+    }
+    if (ok[l][i] == 1) {
+      cool1 = true;
+    } else {
+      cool1 = false;
+    }
+
+    // up-right-corner
+    if (v[l][j] != v[l][j - 1]) {
+      ok[l][j]++;
+    }
+    if (ok[l][j] == 1) {
+      cool2 = true;
+    } else {
+      cool2 = false;
+    }
+  } else if (j - i == 0 && k - l > 0) {
+    cool2 = true;
+    cool4 = true;
+
+    // up-left-corner
+    if (v[l][i] != v[l + 1][i]) {
+      ok[l][i]++;
+    }
+    if (ok[l][i] == 1) {
+      cool1 = true;
+    } else {
+      cool1 = false;
+    }
+    // down-left-corner
+    if (v[k][i] != v[k - 1][i]) {
+      ok[k][i]++;
+    }
+    if (ok[k][i] == 1) {
+      cool3 = true;
+    } else {
+      cool3 = false;
     }
   }
 
@@ -109,9 +154,9 @@ bool sides(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i, i32 j,
       }
 
       if (ok[k][x] == 3) {
-        cool1 = true;
+        cool2 = true;
       } else {
-        cool1 = false;
+        cool2 = false;
         break;
       }
     }
@@ -128,9 +173,9 @@ bool sides(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i, i32 j,
       }
 
       if (ok[x][i] == 3) {
-        cool1 = true;
+        cool3 = true;
       } else {
-        cool1 = false;
+        cool3 = false;
         break;
       }
     }
@@ -147,9 +192,51 @@ bool sides(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i, i32 j,
       }
 
       if (ok[x][j] == 3) {
+        cool4 = true;
+      } else {
+        cool4 = false;
+        break;
+      }
+    }
+  } else if (j - i > 1 && k - l <= 1) {
+    cool2 = true;
+    cool3 = true;
+    cool4 = true;
+
+    // up-side
+    for (i16 x = i + 1; x < j - 1; x++) {
+      if (v[l][x] != v[l][x - 1]) {
+        ok[l][x]++;
+      }
+      if (v[l][x] != v[l][x + 1]) {
+        ok[l][x]++;
+      }
+
+      if (ok[l][x] == 2) {
         cool1 = true;
       } else {
         cool1 = false;
+        break;
+      }
+    }
+  } else if (j - i <= 1 && k - l > 1) {
+    cool1 = true;
+    cool2 = true;
+    cool4 = true;
+
+    // left-side
+    for (i16 x = l + 1; x < k - 1; x++) {
+      if (v[x][i] != v[x - 1][i]) {
+        ok[x][i]++;
+      }
+      if (v[x][i] != v[x + 1][i]) {
+        ok[x][i]++;
+      }
+
+      if (ok[x][i] == 2) {
+        cool3 = true;
+      } else {
+        cool3 = false;
         break;
       }
     }

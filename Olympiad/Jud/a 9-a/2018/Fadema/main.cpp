@@ -1,11 +1,14 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+
+#define endl '\n'
 typedef long long i64;
 typedef int i32;
 typedef short i16;
 typedef vector<i64> vi64;
 typedef vector<vi64> vv;
+typedef string str;
 
 bool corners(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i,
              i32 j, i32 k) {
@@ -251,9 +254,10 @@ bool sides(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i, i32 j,
 
 bool middle(vector<vector<i32>> &ok, vector<vector<i32>> &v, i32 l, i32 i,
             i32 j, i32 k) {
-  bool cool = false;
+  bool cool = true;
 
   if (j - i > 1 && k - l > 1) {
+    cool = false;
     for (i16 x = l + 1; i < k - 1; x++) {
       for (i16 y = i + 1; y < j - 1; y++) {
         if (v[x][y] != v[x - 1][y]) {
@@ -337,10 +341,11 @@ void solve(vector<vector<i32>> &pref, vector<vector<i32>> &v, i32 n, i32 m) {
                 i16 a = j - i + 1, b = k - l + 1;
                 i64 size_vec = a * b;
                 res = max(res, size_vec);
-              } else {
-                stop = true;
-                break;
               }
+              // else {
+              //   stop = true;
+              //   break;
+              // }
             }
           } else if (l == 0 && i != 0) {
             i64 s = pref[k][j] - pref[k][i - 1];
@@ -351,10 +356,11 @@ void solve(vector<vector<i32>> &pref, vector<vector<i32>> &v, i32 n, i32 m) {
                 i16 a = j - i + 1, b = k - l + 1;
                 i64 size_vec = a * b;
                 res = max(res, size_vec);
-              } else {
-                stop = true;
-                break;
               }
+              // else {
+              //   stop = true;
+              //   break;
+              // }
             }
           } else if (l != 0 && i == 0) {
             i64 s = pref[k][j] - pref[l - 1][j];
@@ -365,10 +371,11 @@ void solve(vector<vector<i32>> &pref, vector<vector<i32>> &v, i32 n, i32 m) {
                 i16 a = j - i + 1, b = k - l + 1;
                 i64 size_vec = a * b;
                 res = max(res, size_vec);
-              } else {
-                stop = true;
-                break;
               }
+              // else {
+              //   stop = true;
+              //   break;
+              // }
             }
           } else if (l != 0 && i != 0) {
             i64 s = pref[k][j] - pref[l - 1][j] - pref[k][i - 1] +
@@ -378,10 +385,11 @@ void solve(vector<vector<i32>> &pref, vector<vector<i32>> &v, i32 n, i32 m) {
                 i16 a = j - i + 1, b = k - l + 1;
                 i64 size_vec = a * b;
                 res = max(res, size_vec);
-              } else {
-                stop = true;
-                break;
               }
+              // else {
+              //   stop = true;
+              //   break;
+              // }
             }
           }
         }
@@ -397,6 +405,9 @@ void solve(vector<vector<i32>> &pref, vector<vector<i32>> &v, i32 n, i32 m) {
 }
 
 int main() {
+  // 5 puncte
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
   ifstream cin{"fadema.in"};
 
   i16 n, m;

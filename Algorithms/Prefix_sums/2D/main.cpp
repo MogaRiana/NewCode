@@ -26,8 +26,7 @@ int main() {
 
   for (i64 i = 1; i < n; i++) {
     for (i64 j = 1; j < m; j++) {
-      pref[i][j] =
-          pref[i - 1][j] + pref[i][j - 1] - pref[i - 1][j - 1] + v[i][j];
+      pref[i][j] += pref[i - 1][j] + pref[i][j - 1] - pref[i - 1][j - 1];
     }
   }
 

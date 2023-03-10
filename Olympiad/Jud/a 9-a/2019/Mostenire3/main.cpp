@@ -19,7 +19,7 @@ int main() {
   i64 n, k, tot = 0, young = 1e9;
   cin >> n >> k;
   vi64 g(n);
-  vi64 pos;
+  vector<pair<i64, i64>> pos;
   map<i64, pair<i64, i64>> res;
 
   for (i64 i = 0; i < n; i++) {
@@ -36,13 +36,14 @@ int main() {
       if (s < young) {
         young = s;
       }
-      pos.push_back(s);
-      res[a++] = {s, crt};
+      pos.push_back({s, a});
+      res[a] = {s, crt};
       s = g[i];
       crt = 1;
+      a++;
     }
   }
-  pos.push_back(s);
+  pos.push_back({s, a});
   res[a++] = {s, crt};
 
   sort(pos.rbegin(), pos.rend());
@@ -52,12 +53,35 @@ int main() {
     i64 target = res[i].first;
 
     i64 l = 0, r = pos.size() - 1;
-    while (l <= r) {
+    bool found = true;
+    while (l <= r && found) {
       i64 mid = l + (r - l) / 2;
-      if (pos[mid] == target) {
-        cout << mid + 1;
-        break;
-      } else if (pos[mid] > target) {
+      if (pos[mid].first == target) {
+        if (pos[mid].second == i) {
+          cout << mid + 1;
+          break;
+        } else {
+          i64 j = mid + 1;
+          while (pos[j].first == target) {
+            if (pos[j].second == i) {
+              found = false;
+              cout << j + 1;
+              break;
+            }
+            j++;
+          }
+
+          j = mid - 1;
+          while (found && pos[j].first == target) {
+            if (pos[j].second == i) {
+              found = false;
+              cout << j + 1;
+              break;
+            }
+            j--;
+          }
+        }
+      } else if (pos[mid].first > target) {
         l = mid + 1;
       } else {
         r = mid - 1;

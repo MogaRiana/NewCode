@@ -10,14 +10,6 @@ typedef vector<i64> vi64;
 typedef vector<vi64> vv;
 typedef string str;
 
-i64 gcd(i64 a, i64 b) {
-  if (b == 0) {
-    return a;
-  } else {
-    gcd(b, a % b);
-  }
-}
-
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
@@ -28,24 +20,23 @@ int main() {
   while (t--) {
     i64 n;
     cin >> n;
-    map<i64, i64> v;
-    for (i64 i = 1; i <= n; i++) {
+
+    i64 m = 0, b = 0;
+    for (i64 i = 0; i < n; i++) {
       i64 a;
       cin >> a;
-      v[a] = i;
-    }
-
-    i64 sum = -1;
-    for (auto &x : v) {
-      for (auto &y : v) {
-        if (gcd(x.first, y.first) == 1) {
-          sum = max(sum, x.second + y.second);
-        }
+      if (a % 2 == 0) {
+        m += a;
+      } else {
+        b += a;
       }
     }
 
-    cout << sum << endl;
+    if (m > b) {
+      cout << "YES" << endl;
+    } else {
+      cout << "NO" << endl;
+    }
   }
-
   return 0;
 }

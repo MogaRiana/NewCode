@@ -87,6 +87,11 @@ int main() {
     }
   }
 
+  if (h == 0) {
+    cout << 0 << endl;
+    return 0;
+  }
+
   i64 res = 0;
   vector<vector<bool>> visit(l, vector<bool>(c, false));
   for (i64 i = 0; i < l; i++) {

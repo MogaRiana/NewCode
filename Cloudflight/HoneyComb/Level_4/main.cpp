@@ -13,28 +13,27 @@ typedef string str;
 vi64 dirx = {-1, -1, 0, 0, 1, 1};
 vi64 diry = {-1, 1, -2, 2, -1, 1};
 
-bool bfs(vector<str> &eep, pair<i64, i64> start) {
-  deque<pair<int, int>> q;
+bool bfs(vector<str> &v, pair<i64, i64> start) {
+  deque<pair<i64, i64>> q;
   q.push_back({start.first, start.second});
-  vector<vector<bool>> visit(eep.size(),
-                             vector<bool>(eep.front().size(), false));
+  vector<vector<bool>> visit(v.size(), vector<bool>(v.front().size(), false));
 
   while (!q.empty()) {
-    pair<int, int> cur = q.front();
+    pair<i64, i64> cur = q.front();
     q.pop_front();
     visit[cur.first][cur.second] = true;
 
-    for (int i = 0; i < 6; i++) {
-      int x = cur.first + dirx[i];
-      int y = cur.second + diry[i];
-      if (x >= 0 and x < eep.size() and y >= 0 and y < eep.front().size() and
-          !visit[x][y] and eep[x][y] != 'X') {
+    for (i64 i = 0; i < 6; i++) {
+      i64 x = cur.first + dirx[i];
+      i64 y = cur.second + diry[i];
+      if (x >= 0 and x < v.size() and y >= 0 and y < v[0].size() and
+          !visit[x][y] and v[x][y] != 'X') {
         q.push_back({x, y});
       }
     }
 
-    if (cur.first == eep.size() - 1 or cur.first == 0 or cur.second == 0 or
-        cur.second == eep.front().size()) {
+    if (cur.first == v.size() - 1 or cur.first == 0 or cur.second == 0 or
+        cur.second == v[0].size()) {
       return true;
     }
   }

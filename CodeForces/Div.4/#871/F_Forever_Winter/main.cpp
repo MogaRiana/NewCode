@@ -19,13 +19,30 @@ int main() {
   cin >> t;
 
   while (t--) {
-    i64 n;
-    cin >> n;
+    i64 n, m;
+    cin >> n >> m;
 
-    vi64 v(n);
-    for (i64 i = 0; i < n; i++) {
-      cin >> v[i];
+    vv g(n);
+    for (i64 i = 0; i < m; i++) {
+      i64 a, b;
+      cin >> a >> b;
+
+      a--;
+      b--;
+
+      g[a].push_back(b);
+      g[b].push_back(a);
     }
+
+    vi64 res;
+    for (i64 i = 0; i < n; i++) {
+      if (g[i].size() > 1) {
+        res.push_back(i);
+      }
+    }
+
+    cout << res.size() - 1 << " " << (n - res.size()) / (res.size() - 1)
+         << endl;
   }
 
   return 0;

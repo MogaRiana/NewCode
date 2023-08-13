@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "BasicRemains",
+            "request": "launch",
+            "mainClass": "Kattis.Java.BasicRemains.BasicRemains",
+            "projectName": "NewCode_8f3dfa5d"
+        },
+        {
             "name": "Python",
             "type": "python",
             "request": "launch",

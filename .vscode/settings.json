@@ -24,5 +24,9 @@
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
     "clang-format.executable": "/usr/bin/clang-format",
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }

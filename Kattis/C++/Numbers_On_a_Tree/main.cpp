@@ -15,26 +15,24 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  vi64 v(1000001);
-  i64 ss = 1;
-  for (i64 i = 1; i <= 1000000; i++) {
-    ss *= i;
-    while (ss % 10 == 0) {
-      ss /= 10;
-    }
-
-    v[i] = ss % 10;
-    ss = ss % 10000000;
-  }
-
   i64 n;
-  while (cin >> n) {
-    if (n == 0) {
-      break;
-    }
+  str s;
+  cin >> n;
+  getline(cin, s);
 
-    cout << v[n] << endl;
+  n = pow(2, n + 1);
+
+  i64 pos = 1;
+  for (i64 i = 0; i < s.size(); i++) {
+    char dir = s[i];
+    if (dir == 'L') {
+      pos = pos * 2;
+    } else if (dir == 'R') {
+      pos = pos * 2 + 1;
+    }
   }
+
+  cout << n - pos << endl;
 
   return 0;
 }

@@ -15,26 +15,30 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  vi64 v(1000001);
-  i64 ss = 1;
-  for (i64 i = 1; i <= 1000000; i++) {
-    ss *= i;
-    while (ss % 10 == 0) {
-      ss /= 10;
-    }
-
-    v[i] = ss % 10;
-    ss = ss % 10000000;
-  }
-
   i64 n;
-  while (cin >> n) {
-    if (n == 0) {
-      break;
+  cin >> n;
+
+  i64 p = 10, m = 0;
+  for (i64 i = 2; i < 10; i++) {
+    i64 crt = 0, a = n;
+
+    while (a / i != 0) {
+      if (a % 2 == 0) {
+        crt++;
+      } else {
+        break;
+      }
+
+      a /= 2;
     }
 
-    cout << v[n] << endl;
+    if (crt > m) {
+      p = i;
+      m = crt;
+    }
   }
+
+  cout << p << endl;
 
   return 0;
 }

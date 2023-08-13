@@ -21,7 +21,6 @@ void bfs(vector<vector<char>> &grid, pair<i64, i64> start) {
 
   while (!q.empty()) {
     pair<i64, i64> cur = q.front();
-    vector<pair<i64, i64>> pos;
     q.pop_front();
     visit[cur.first][cur.second] = true;
 
@@ -30,24 +29,24 @@ void bfs(vector<vector<char>> &grid, pair<i64, i64> start) {
       grid[cur.first][cur.second] = '.';
     }
 
+    i64 cnt = 0;
     for (i64 i = 0; i < 4; i++) {
       i64 x = cur.first + dirx[i];
       i64 y = cur.second + diry[i];
 
       if (x >= 0 and x < grid.size() and y >= 0 and y < grid.front().size() and
           !visit[x][y] and grid[x][y] != '#') {
-        if (grid[x][y] != 'T') {
-          pos.push_back({x, y});
-          visit[x][y] = true;
-        } else {
-          pos.clear();
+        q.push_back({x, y});
+        cnt++;
+
+        if (grid[x][y] == 'T') {
+          for (i64 i = 0; i < cnt; i++) {
+            q.pop_back();
+          }
+
           break;
         }
       }
-    }
-
-    for (i64 i = 0; i < pos.size(); i++) {
-      q.push_back(pos[i]);
     }
   }
 

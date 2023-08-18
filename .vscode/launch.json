@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "BasicRemains",
+            "name": "Java",
             "request": "launch",
-            "mainClass": "Kattis.Java.BasicRemains.BasicRemains",
-            "projectName": "NewCode_8f3dfa5d"
+            "mainClass": "${file}",
+            "console": "integratedTerminal"
         },
         {
             "name": "Python",

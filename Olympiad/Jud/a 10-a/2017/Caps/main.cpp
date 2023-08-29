@@ -56,8 +56,8 @@ int main() {
 
     if (n < next.size()) {
       char r1 = next[n];
-      // i32 r2 = m[r1].second;
-      cout << r1;
+      //i32 r2 = m[r1].second[n].second;
+      cout << r1 << endl;
     }
   }
 

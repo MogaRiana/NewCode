@@ -15,7 +15,7 @@ typedef string str;
 const vi32 dirx = {-1, 1, 0, 0};
 const vi32 diry = {0, 0, -1, 1};
 
-bool verify(i32 x, i32 y, i32 n) {
+bool verify(i32 &x, i32 &y, i32 &n) {
   if (x >= 0 and x < n and y >= 0 and y < n) {
     return true;
   }
@@ -23,7 +23,7 @@ bool verify(i32 x, i32 y, i32 n) {
   return false;
 }
 
-i32 solve1(vv32 &grid, i32 n, i32 g) {
+i32 solve1(vv32 &grid, i32 &n, i32 &g) {
   deque<pair<int, int>> q;
   q.push_back({0, 0});
   vector<vector<bool>> visit(n, vector<bool>(n, false));
@@ -55,7 +55,7 @@ i32 solve1(vv32 &grid, i32 n, i32 g) {
   return mark[n - 1][n - 1];
 }
 
-i32 solve2(vv32 &grid, i32 n, i32 &g) {
+i32 solve2(vv32 &grid, i32 &n) {
   deque<pair<int, int>> q;
   q.push_back({0, 0});
   vector<vector<bool>> visit(n, vector<bool>(n, false));
@@ -112,7 +112,7 @@ int main() {
     cout << solve1(grid, n, g) << endl;
   } else {
     g = grid[0][0];
-    cout << solve2(grid, n, g) << endl;
+    cout << solve2(grid, n) << endl;
   }
 
   return 0;

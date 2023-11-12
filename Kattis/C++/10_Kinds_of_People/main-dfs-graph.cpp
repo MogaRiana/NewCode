@@ -19,7 +19,7 @@ bool dfs(i64 start_node, i64 end_node, vv &v, vector<bool> &visit) {
     visit[start_node] = true;
     for (auto &x : v[start_node]) {
       if (!visit[x]) {
-        dfs(x, end_node, v, visit);
+        return dfs(x, end_node, v, visit);
       }
     }
   }

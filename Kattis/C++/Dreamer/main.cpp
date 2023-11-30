@@ -11,40 +11,24 @@ typedef vector<vi64> vv;
 typedef string str;
 typedef pair<i64, i64> p64;
 
-bool leap(i64 year) {
-  if ((year % 4 == 0) && ((year % 400 == 0) || (year % 100 != 0))) {
-    return true;
+i64 days[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+bool valid(i64 day, i64 month, i64 year) {
+  if (year < 2000 || month > 12 || month == 0 || day == 0) {
+    return false;
   }
 
-  return false;
-}
-
-bool valid(i64 d, i64 m, i64 y) {
-  if (y >= 2000 and m >= 1 and m < 13 and d >= 1 and d < 32) {
-    if (d == 29 and m == 2) {
-      return leap(y);
-    } else if ((m < 8 and m > 0 and m % 2 == 1) or
-               (m < 13 and m > 7 and m % 2 == 0)) {
-      if (d <= 31) {
-        return true;
-      }
-      return false;
-    } else if ((m < 7 and m > 0 and m % 2 == 0) or
-               (m < 13 and m > 7 and m % 2 == 1)) {
-      if (d <= 30) {
-        return true;
-      }
-      return false;
-    }
+  if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
+    days[1] = 29;
+  } else {
+    days[1] = 28;
   }
 
-  return false;
+  if (days[month - 1] < day) {
+    return false;
+  }
+  return true;
 }
-
-/*
-1 3 5 7 8 10 12
-2 4 6 9 11
-*/
 
 int main() {
   ios::sync_with_stdio(false);

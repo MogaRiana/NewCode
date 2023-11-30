@@ -13,6 +13,13 @@ typedef string str;
 const vector<int> dirx = {1, -1, 0, 0};
 const vector<int> diry = {0, 0, 1, -1};
 
+bool verify(i64 x, i64 y, pair<i64, i64> v) {
+  if (x >= 0 and x < v.first and y >= 0 and y < v.second) {
+    return true;
+  }
+  return false;
+}
+
 void bfs(vector<vector<char>> &grid, pair<i64, i64> start) {
   i64 crt = 0;
   deque<pair<i64, i64>> q;
@@ -29,22 +36,37 @@ void bfs(vector<vector<char>> &grid, pair<i64, i64> start) {
       grid[cur.first][cur.second] = '.';
     }
 
-    i64 cnt = 0;
+    bool trap = false;
     for (i64 i = 0; i < 4; i++) {
-      i64 x = cur.first + dirx[i];
-      i64 y = cur.second + diry[i];
+      int x = cur.first + dirx[i];
+      int y = cur.second + diry[i];
 
-      if (x >= 0 and x < grid.size() and y >= 0 and y < grid.front().size() and
-          !visit[x][y] and grid[x][y] != '#') {
-        q.push_back({x, y});
-        cnt++;
-
+      if (verify(x, y, {grid.size(), grid[0].size()}) and grid[x][y] != '#' and
+          !visit[x][y]) {
         if (grid[x][y] == 'T') {
-          for (i64 i = 0; i < cnt; i++) {
-            q.pop_back();
-          }
-
+          trap = true;
           break;
+        }
+      }
+    }
+
+    if (!trap) {
+      for (i64 i = 0; i < 4; i++) {
+        int x = cur.first + dirx[i];
+        int y = cur.second + diry[i];
+
+        if (verify(x, y, {grid.size(), grid[0].size()}) and
+            grid[x][y] != '#' and !visit[x][y]) {
+          q.push_back({x, y});
+        }
+      }
+    } else {
+      for (i64 i = 0; i < 4; i++) {
+        int x = cur.first + dirx[i];
+        int y = cur.second + diry[i];
+
+        if (verify(x, y, {grid.size(), grid[0].size()})) {
+          visit[x][y] = true;
         }
       }
     }

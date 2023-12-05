@@ -16,15 +16,11 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  int *a = new int[3];
-  a[0] = 1;
-  a[1] = 89;
-  a[2] = 10;
+  string str("There are two needles in this haystack with needles.");
+  string str2("zzzzz");
 
-  cout << a << endl;
-
-  int *b = a + 20222022;
-  cout << b << " " << (*b) << endl;
+  i64 f = str.find(str2);
+  cout << f << endl;
 
   return 0;
 }

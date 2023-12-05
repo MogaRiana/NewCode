@@ -11,12 +11,12 @@ int main() {
   string s;
   cin >> s;
   set<char> a;
-  for (i64 i = 0; i < s.size() - 13; i++) {
-    for (i64 j = i; j < i + 14; j++) {
+  for (i64 i = 0; i < s.size() - 3; i++) {
+    for (i64 j = i; j < i + 4; j++) {
       a.insert(s[j]);
     }
-    if (a.size() == 14) {
-      cout << i + 14 << endl;
+    if (a.size() == 4) {
+      cout << i + 4 << endl;
       break;
     }
     a.clear();

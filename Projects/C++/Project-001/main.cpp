@@ -2,23 +2,17 @@
 
 using namespace std;
 
-class Pair {
-private:
-  int aa;
-
-public:
-  int first;
-  int second;
-
-  int add(int a, int b) { return a + b; }
-};
-
 int main() {
-  Pair a;
-  a.first = 1;
-  a.second = 2;
+  unordered_map<char, int> um = {
+      {'a', 1}, {'b', 2}, {'c', 3}, {'d', 4}, {'e', 5}};
 
-  a.add(a.first, a.second);
+  auto it = um.find('f');
+
+  if (it == um.end()) {
+    cout << "Nu exista" << endl;
+  } else {
+    cout << "Iterator points to " << it->first << " = " << it->second << endl;
+  }
 
   return 0;
 }

@@ -1,26 +1,23 @@
-#include <bits/stdc++.h>
-
+// C++ program to find indices of all
+// occurrences of one string in other.
+#include <iostream>
 using namespace std;
+void printIndex(string str, string s) {
 
-#define endl '\n'
-typedef long long i64;
-typedef int i32;
-typedef short i16;
-typedef vector<i64> vi64;
-typedef vector<vi64> vv;
-typedef string str;
-typedef pair<i64, i64> p64;
+  bool flag = false;
+  for (int i = 0; i < str.size(); i++) {
+    if (str.substr(i, s.size()) == s) {
+      cout << i << " ";
+      flag = true;
+    }
+  }
 
+  if (flag == false)
+    cout << "NONE";
+}
 int main() {
-  ios::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-
-  string str("There are two needles in this haystack with needles.");
-  string str2("zzzzz");
-
-  i64 f = str.find(str2);
-  cout << f << endl;
-
+  string str1 = "GeeksforGeeks";
+  string str2 = "Geeks";
+  printIndex(str1, str2);
   return 0;
 }

@@ -1,9 +1,16 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef long long i64;
+typedef string str;
 
 int main() {
-  char c = 'x';
-  char cr = 10;
-  cout << c << '\n' << c << endl;
+  str s = "BAAC";
+  cout << s << endl;
+
+  while (next_permutation(s.begin(), s.end())) {
+    cout << s << endl;
+  }
+
+  return 0;
 }

@@ -2,35 +2,40 @@
 
 using namespace std;
 
-class Tree {
+class elevi {
 private:
-  int data;
-  Tree *left;
-  Tree *right;
+  int nota;
+  int absente;
 
 public:
-  Tree *createNode(int data) {
-    Tree *temp = new Tree;
-    temp->data = data;
-    temp->left = NULL;
-    temp->right = NULL;
-    return temp;
+  void setnota(int nota) { this->nota = nota; }
+};
+
+class Catalog {
+private:
+  int n;
+  vector<elevi> eep;
+
+public:
+  void citire(vector<elevi> &eep) {
+    //.....
   }
+};
 
-  Tree *insertNode(Tree *root, int data) {
-    if (root == NULL) {
-      return createNode(data);
-    }
+class Notebook : Catalog {
+private:
+  int nigger;
 
-    if (data < root->data) {
-      root->left = insertNode(root->left, data);
-    } else if (data > root->data) {
-      root->right = insertNode(root->right, data);
-    }
+public:
+  int white_boy;
+};
 
-    return root;
-  }
+int main() {
+  Catalog clasa_a;
 
-}; // bst implementation, not finished yet
+  // clasa_a.setnota();
 
-int main() { return 0; }
+  Notebook eep;
+
+  vector<int> mata;
+}

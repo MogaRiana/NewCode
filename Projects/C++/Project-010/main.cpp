@@ -11,20 +11,19 @@ typedef vector<vi64> vv;
 typedef string str;
 typedef pair<i64, i64> p64;
 
+typedef struct {
+  str fname;
+  str lname;
+} student;
+
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  int *a = new int[3];
-  a[0] = 1;
-  a[1] = 89;
-  a[2] = 10;
-
-  cout << a << endl;
-
-  int *b = a + 20222022;
-  cout << b << " " << (*b) << endl;
+  student abc;
+  cin >> abc.fname;
+  cout << abc.fname << endl;
 
   return 0;
 }

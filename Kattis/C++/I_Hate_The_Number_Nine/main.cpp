@@ -14,13 +14,20 @@ typedef vector<p64> vp64;
 
 const i64 MOD = 1e9 + 7;
 
-i64 nine(i64 n) {
-  i64 ans = 1;
-  for (i64 i = 0; i < n; i++) {
-    ans = ans * 9 % MOD;
+i64 bpow(i64 n, i64 m) {
+  if (m == 0) {
+    return 1;
+  }
+  if (m == 1) {
+    return n;
   }
 
-  return ans;
+  if (m % 2 == 0) {
+    i64 res = bpow(n, m / 2);
+    return res * res % MOD;
+  } else {
+    return n * bpow(n, m - 1) % MOD;
+  }
 }
 
 int main() {
@@ -35,7 +42,7 @@ int main() {
     i64 n;
     cin >> n;
 
-    cout << 8 * nine(n - 1) % MOD << endl;
+    cout << 8 * bpow(9, n - 1) % MOD << endl;
   }
 
   return 0;

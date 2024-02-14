@@ -28,24 +28,18 @@ int main() {
     occ[x]++;
   }
 
-  deque<i64> res;
+  priority_queue<i64> res;
   for (auto &x : occ) {
-    res.push_back(x.second);
+    res.push(x.second);
   }
-  sort(res.begin(), res.end());
 
   while (k) {
-    if (res.back() < k) {
-      k -= res.back();
-      res.pop_back();
-    } else {
-      res.back() -= k;
-      k = 0;
-    }
+    res.push(res.top() - 1);
+    res.pop();
+    k--;
   }
 
-  sort(res.begin(), res.end());
-  cout << res.back() << endl;
+  cout << res.top() << endl;
 
   return 0;
 }

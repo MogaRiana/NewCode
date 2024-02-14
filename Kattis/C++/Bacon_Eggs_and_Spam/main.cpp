@@ -5,7 +5,7 @@ typedef long long i64;
 typedef vector<i64> vi64;
 typedef string str;
 
-map<str, vector<str>> make(str line, map<str, vector<str>> &m) {
+map<str, set<str>> make(str line, map<str, set<str>> &m) {
   stringstream sstream(line);
   string s;
 
@@ -13,7 +13,7 @@ map<str, vector<str>> make(str line, map<str, vector<str>> &m) {
   str name = s;
 
   while (sstream >> s) {
-    m[s].push_back(name);
+    m[s].insert(name);
   }
 
   return m;
@@ -22,7 +22,7 @@ map<str, vector<str>> make(str line, map<str, vector<str>> &m) {
 int main() {
   i64 n;
   while (cin >> n and n != 0) {
-    map<str, vector<str>> m;
+    map<str, set<str>> m;
     str l;
     getline(cin, l);
 
@@ -33,8 +33,8 @@ int main() {
 
     for (auto &x : m) {
       cout << x.first << " ";
-      for (i64 i = 0; i < x.second.size(); i++) {
-        cout << x.second[i] << " ";
+      for (auto &name : x.second) {
+        cout << name << " ";
       }
       cout << endl;
     }

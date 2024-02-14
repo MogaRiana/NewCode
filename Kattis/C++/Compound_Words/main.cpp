@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define endl '\n'
+// #define endl '\n'
 typedef long long i64;
 typedef int i32;
 typedef short i16;
@@ -22,10 +22,9 @@ int main() {
 
   while (getline(cin, s)) {
     str ss;
-    i64 c = v.size();
 
     for (i64 i = 0; i < s.size(); i++) {
-      if (s[i] == ' ' or s[i] == '/') {
+      if (s[i] == ' ') {
         v.push_back(ss);
         ss.clear();
       } else {

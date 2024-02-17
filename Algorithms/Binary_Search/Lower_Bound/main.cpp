@@ -24,9 +24,7 @@ int main() {
     }
 
     if (a != -1) {
-      cout << "first apparition of " << x << " is a pos: " << a << endl;
-    } else {
-      cout << "the number: " << x << " doesn't exist in the vector" << endl;
-    }
+      cout << "first apparition of " << x << " is at pos: " << a << endl;
+    } 
   }
 }

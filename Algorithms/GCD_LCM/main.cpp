@@ -11,6 +11,7 @@ long long lcm(int a, int b) { return (a / gcd(a, b)) * b; }
 
 int main() {
   int a = 15, b = 20;
-  cout << "LCM of " << a << " and " << b << " is " << lcm(a, b);
+  cout << "LCM of " << a << " and " << b << " is " << lcm(a, b) << endl;
+  cout << "GCM of " << a << " and " << b << " is " << gcd(a, b) << endl;
   return 0;
 }

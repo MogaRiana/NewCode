@@ -42,8 +42,8 @@ int main() {
     cin >> n;
 
     i64 ll = 0, res = -1, er = 0;
-    map<i64, i64> ind;
-    set<i64> num;
+    unordered_map<i64, i64> ind;
+    unordered_set<i64> num;
 
     vi64 v(n);
     for (i64 i = 0; i < n; i++) {
@@ -62,7 +62,7 @@ int main() {
           num.insert(x);
           ll++;
         } else {
-          set<i64> aux;
+          unordered_set<i64> aux;
           i64 k;
           for (i64 j = i - 1; j > 0; j--) {
             aux.insert(v[j - 1]);

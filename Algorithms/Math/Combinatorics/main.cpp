@@ -60,10 +60,7 @@ i64 fact(i64 n) {
   }
 }
 
-i64 ifact(i64 n) {
-  i64 x = fact(n);
-  return bpow(x, MOD - 2);
-}
+i64 ifact(i64 n) { return bpow(fact(n), MOD - 2); }
 
 i64 comb(i64 n, i64 k) {
   if (n < k) {
@@ -79,8 +76,8 @@ i64 comb(i64 n, i64 k) {
   return mult(mult(fact(n), ifact(n - k)), ifact(k));
 }
 
+i64 perm(i64 n) { return fact(n); }
 i64 arn(i64 n, i64 k) { return mult(fact(n), ifact(n - k)); }
-i64 arn(i64 n) { return fact(n); }
 
 int main() {
   ios::sync_with_stdio(false);
@@ -88,6 +85,8 @@ int main() {
   cout.tie(NULL);
 
   cout << comb(5, 3) << endl;
+  cout << arn(5, 3) << endl;
+  cout << perm(5) << endl;
 
   return 0;
 }

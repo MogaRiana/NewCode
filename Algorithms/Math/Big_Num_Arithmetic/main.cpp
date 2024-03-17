@@ -34,14 +34,20 @@ int main() {
   cin >> s;
   cin >> n;
 
-  int x[100];
+  int x[100], y[100];
   x[0] = s.size();
   for (int i = 1; i <= x[0]; i++) {
     x[i] = s[s.size() - 1] - '0';
+    y[i] = s[s.size() - 1] - '0';
     s.pop_back();
   }
 
-  int r = Divide(x, n);
+  Mult(x, n);
+  for (int i = x[0]; i > 0; i--) {
+    cout << x[i];
+  }
+
+  int r = Divide(y, n);
   for (int i = x[0]; i > 0; i--) {
     cout << x[i];
   }

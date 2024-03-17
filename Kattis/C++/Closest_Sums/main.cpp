@@ -11,8 +11,8 @@ typedef vector<vi64> vv;
 typedef string str;
 
 int main() {
-  //   ios::sync_with_stdio(false);
-  //   cin.tie(NULL);
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
 
   i64 n, caz = 1;
   while (cin >> n) {

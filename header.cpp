@@ -5,7 +5,7 @@ using namespace std;
 #define endl '\n'
 #define ft first
 #define sd second
-#define sz(x) (i6) x.size()
+#define sz(x) (i64) x.size()
 #define col(x) x.begin(), x.end()
 #define srt(x) sort(x.begin(), x.end())
 #define rsrt(x) sort(x.rbegin(), x.rend())

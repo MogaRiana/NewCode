@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define endl '\n'
+// #define endl '\n'
 #define ft first
 #define sd second
 #define sz(x) (i6) x.size()
@@ -54,13 +54,14 @@ void ratie(i64 &r, bool &ok, vv &v, p64 p1, p64 p2) {
   return;
 }
 
+ofstream fout{"aprogressive.out"};
 void sol(p64 p1, p64 p2, vv &v) {
-  i64 l = v.size(), c = v.front().size();
   i64 x1 = p1.ft, y1 = p1.sd;
   i64 x2 = p2.ft, y2 = p2.sd;
 
   if (x1 == x2 or y1 == y2) {
-    res.push_back({x1, y1, x2, y2, 0});
+    fout << '(' << x1 + 1 << ',' << y1 + 1 << ',' << x2 + 1 << ',' << y2 + 1
+         << ',' << 0 << ')';
     return;
   }
 
@@ -70,17 +71,22 @@ void sol(p64 p1, p64 p2, vv &v) {
   ratie(r, ok, v, p1, p2);
 
   if (ok and r != 0) {
-    res.push_back({x1, y1, x2, y2, r});
+    fout << '(' << x1 + 1 << ',' << y1 + 1 << ',' << x2 + 1 << ',' << y2 + 1
+         << ',' << r << ')';
     return;
   }
 
   i64 mx = (x1 + x2) / 2;
   i64 my = (y1 + y2) / 2;
 
+  fout << '(';
+
   sol({x1, y1}, {mx, my}, v);
   sol({x1, my + 1}, {mx, y2}, v);
-  sol({mx + 1, 0}, {x2, my}, v);
+  sol({mx + 1, y1}, {x2, my}, v);
   sol({mx + 1, my + 1}, {x2, y2}, v);
+
+  fout << ')';
 
   return;
 }
@@ -159,19 +165,6 @@ int main() {
   }
 
   sol({0, 0}, {l - 1, c - 1}, v);
-
-  cout << '(';
-  for (i64 i = 0; i < res.size(); i++) {
-    cout << '(';
-    for (i64 j = 0; j < res[i].size(); j++) {
-      if (j != res[i].size() - 1) {
-        cout << res[i][j] + 1 << ',';
-      } else {
-        cout << res[i][j] << ')';
-      }
-    }
-  }
-  cout << ')';
 
   return 0;
 }

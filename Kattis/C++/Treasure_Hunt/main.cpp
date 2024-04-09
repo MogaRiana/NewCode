@@ -5,7 +5,7 @@ using namespace std;
 #define endl '\n'
 #define ft first
 #define sd second
-#define sz(x) (i6) x.size()
+#define sz(x) (i64) x.size()
 #define col(x) x.begin(), x.end()
 #define srt(x) sort(x.begin(), x.end())
 #define rsrt(x) sort(x.rbegin(), x.rend())
@@ -26,10 +26,43 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-void sol(str n, i64 c) {
-  if (n.size() == c) {
+i64 l, c;
+i64 m = 0;
+string mt[200];
+string sol = "lost";
+bool vis[200][200];
+
+void solve(i64 x, i64 y) {
+  if (x < 0 || x >= l || y < 0 || y >= c) {
+    sol = "Out";
     return;
   }
+  if (mt[x][y] == 'T') {
+    sol = "Won";
+    return;
+  }
+  if (vis[x][y]) {
+    sol = "Lost";
+    return;
+  }
+
+  vis[x][y] = true;
+  switch (mt[x][y]) {
+  case 'N':
+    x -= 1;
+    break;
+  case 'S':
+    x += 1;
+    break;
+  case 'E':
+    y += 1;
+    break;
+  case 'W':
+    y -= 1;
+    break;
+  }
+  m += 1;
+  solve(x, y);
 }
 
 int main() {
@@ -37,11 +70,17 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  str s;
-  while (cin >> s) {
-    if (s == "END") {
-      return 0;
-    }
+  cin >> l >> c;
+  for (i64 i = 0; i < l; i++) {
+    cin >> mt[i];
+  }
+
+  solve(0, 0);
+
+  if (sol == "Won") {
+    cout << m;
+  } else {
+    cout << sol;
   }
 
   return 0;

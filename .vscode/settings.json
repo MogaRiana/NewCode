@@ -23,7 +23,10 @@
         "*.tcc": "cpp",
         "istream": "cpp",
         "format": "cpp",
-        "stacktrace": "cpp"
+        "stacktrace": "cpp",
+        "chrono": "cpp",
+        "generator": "cpp",
+        "text_encoding": "cpp"
     },
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,

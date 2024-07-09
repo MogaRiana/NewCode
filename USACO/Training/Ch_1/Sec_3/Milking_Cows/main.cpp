@@ -37,8 +37,8 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  // ifstream cin("milk2.in");
-  // ofstream cout("milk2.out");
+  ifstream cin("milk2.in");
+  ofstream cout("milk2.out");
 
   i64 n;
   cin >> n;

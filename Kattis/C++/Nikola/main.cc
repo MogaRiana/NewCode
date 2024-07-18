@@ -26,46 +26,36 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-/*
-ID: Riana Moga (rianamo1)
-TASK: milk
-LANG: C++
-*/
+vector<int> v;
+using ll = long long;
+const ll INF = 1e18;
+int n;
+
+ll dp[1024][1024];
+
+ll solve(int i, int p) {
+  if (i >= n || i < 0) {
+    return INF;
+  }
+  if (i == n - 1) {
+    return v[i];
+  }
+  if (dp[i][p] != 0) {
+    return dp[i][p];
+  }
+
+  return dp[i][p] = v[i] + min(solve(i + p + 1, p + 1), solve(i - p, p));
+}
 
 int main() {
-  ios::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
+  int x;
+  cin >> n;
 
-  ifstream cin("milk.in");
-  ofstream cout("milk.out");
-
-  i64 m, c;
-  cin >> m >> c;
-
-  vp64 cost(c);
-  for (auto &x : cost) {
-    cin >> x.ft >> x.sd;
+  for (int i = 0; i < n; i += 1) {
+    cin >> x;
+    v.push_back(x);
   }
 
-  srt(cost);
-  i64 tot = 0;
-  for (auto &x : cost) {
-    if (m == 0) {
-      break;
-    }
-
-    if (x.sd <= m) {
-      i64 d = m - x.sd;
-      tot += x.ft * x.sd;
-      m -= x.sd;
-    } else {
-      tot += m * x.ft;
-      m = 0;
-    }
-  }
-
-  cout << tot << endl;
-
+  cout << solve(1, 1) << endl;
   return 0;
 }

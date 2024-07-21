@@ -43,24 +43,21 @@ bool ver(i64 n) {
   return true;
 }
 
-// vi64 res1, res2;
+vi64 res1, res2;
+void sol(int n, int pos, int nr) {
+  if (pos == n) {
+    if (n == 3) {
+      res1.push_back(nr);
+    } else if (n == 2) {
+      res2.push_back(nr);
+    }
+    return;
+  }
 
-// void sol(int n, int pos, int nr) {
-//   if (pos == n) {
-//     if (n == 3) {
-//       res1.push_back(nr);
-//     } else if (n == 2) {
-//       res2.push_back(nr);
-//     }
-//     return;
-//   }
-
-//   for (auto &i : d) {
-//     if (nr == 0 and i == 0)
-//       continue;
-//     sol(n, pos + 1, nr * 10 + i);
-//   }
-// }
+  for (auto &i : d) {
+    sol(n, pos + 1, nr * 10 + i);
+  }
+}
 
 int main() {
   ios::sync_with_stdio(false);
@@ -80,22 +77,21 @@ int main() {
     d.insert(k);
   }
 
-  i64 ans = 0;
-  for (i64 i = 100; i <= 999; i++) {
-    if (ver(i)) {
-      for (i64 j = 10; j <= 99; j++) {
-        if (ver(j)) {
-          i64 a = i * (j % 10);
-          i64 b = i * (j / 10);
-          i64 c = i * j;
+  sol(3, 0, 0);
+  sol(2, 0, 0);
 
-          if (ver(a) and ver(b) and ver(c) and (a >= 100 and a <= 999) and
-              (b >= 100 and b <= 999) and (c >= 1000 and c <= 9999)) {
-            // cout << i << " " << j << endl;
-            // cout << a << " " << b << " " << c << endl;
-            ans++;
-          }
-        }
+  i64 ans = 0;
+  for (auto &i : res1) {
+    for (auto &j : res2) {
+      i64 a = i * (j % 10);
+      i64 b = i * (j / 10);
+      i64 c = i * j;
+
+      if (ver(a) and ver(b) and ver(c) and (a >= 100 and a <= 999) and
+          (b >= 100 and b <= 999) and (c >= 1000 and c <= 9999)) {
+        // cout << i << " " << j << endl;
+        // cout << a << " " << b << " " << c << endl;
+        ans++;
       }
     }
   }

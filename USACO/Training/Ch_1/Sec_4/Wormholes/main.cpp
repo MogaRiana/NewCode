@@ -32,6 +32,52 @@ TASK: wormhole
 LANG: C++
 */
 
+int n, x[12 + 1], y[12 + 1];
+int part[12 + 1];
+int next_right[12 + 1];
+
+bool cycle() {
+  for (int st = 1; st <= n; st++) {
+    int pos = st;
+    for (int c = 0; c < n; c++) {
+      pos = next_right[part[pos]];
+    }
+    if (pos != 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+int solve() {
+  int i, tot = 0;
+  for (i = 1; i <= n; i++) {
+    if (part[i] == 0) {
+      break;
+    }
+  }
+
+  if (i > n) {
+    if (cycle()) {
+      return 1;
+    }
+    return 0;
+  }
+
+  for (int j = i + 1; j <= n; j++) {
+    if (part[j] == 0) {
+      part[i] = j;
+      part[j] = i;
+      tot += solve();
+
+      part[i] = part[j] = 0;
+    }
+  }
+
+  return tot;
+}
+
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
@@ -40,13 +86,23 @@ int main() {
   ifstream cin("wormhole.in");
   ofstream cout("wormhole.out");
 
-  i64 n;
   cin >> n;
 
-  vp64 pos(n);
-  for (i64 i = 0; i < n; ++i) {
-    cin >> pos[i].ft >> pos[i].sd;
+  for (int i = 1; i <= n; i++) {
+    cin >> x[i] >> y[i];
   }
+
+  for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+      if (x[i] < x[j] && y[j] == y[i]) {
+        if (next_right[i] == 0 or x[j] - x[i] < x[next_right[i]] - x[i]) {
+          next_right[i] = j;
+        }
+      }
+    }
+  }
+
+  cout << solve() << endl;
 
   return 0;
 }

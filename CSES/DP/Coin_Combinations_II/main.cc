@@ -34,25 +34,41 @@ const int MOD = 1e9 + 7;
 void slv() {
   dp[0] = 1;
 
-  for (int i = 1; i <= k; i++) {
-    for (int j = 0; j < n; j++) {
-      if (i - coin[j] >= 0) {
-        dp[i] = (dp[i] + dp[i - coin[j]]) % MOD;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j <= k; j++) {
+      if (j - coin[i] >= 0) {
+        dp[j] = (dp[j] + dp[j - coin[i]]) % MOD;
       }
     }
   }
 }
 
 /*
+2
 2 1
+3 0
+4 1
+5 0
+6 1
+7 0
+8 1
+9 0
+
+3
 3 1
 4 1
-5 3
+5 1
 6 2
-7 5
-8 6
-9 8
+7 1
+8 1
+9 2
 
+5
+5 2
+6 2
+7 1
+8 2
+9 3
 */
 
 int main() {

@@ -35,6 +35,7 @@ int power_of_two(int n) {
   return crt * 2;
 }
 
+vi64 height, in_out, first;
 class SegmentTree {
 private:
   int n;
@@ -42,8 +43,8 @@ private:
   int len;
 
   void build(vector<i64> &tr) {
-    for (int i = 0; i < n; i++) {
-      tree[i + len] = tr[i];
+    for (int i = 0; i < in_out.size(); i++) {
+      tree[i + len] = tr[in_out[i]];
     }
 
     int start = len / 2;
@@ -68,7 +69,7 @@ public:
   int query(int l, int r) {
     l = l + len - 1;
     r = r + len - 1;
-    int res = -1;
+    int res = 1e9;
 
     while (l <= r) {
       if (l % 2 == 1) {
@@ -87,17 +88,17 @@ public:
   }
 };
 
-vi64 height, euler, first;
 vector<bool> visited;
-void dfs(vv &adj, int node, int h = 0) {
+
+void dfsl(vv &adj, int node, int h = 0) {
   visited[node] = true;
   height[node] = h;
-  first[node] = euler.size();
-  euler.push_back(node);
+  first[node] = in_out.size();
+  in_out.push_back(node);
   for (auto to : adj[node]) {
     if (!visited[to]) {
-      dfs(adj, to, h + 1);
-      euler.push_back(node);
+      dfsl(adj, to, h + 1);
+      in_out.push_back(node);
     }
   }
 }
@@ -121,7 +122,7 @@ bool bfs(vv &p, i64 st, i64 fn, char prf) {
     }
 
     for (i64 to : p[cur]) {
-      if (s[to - 1] == prf) {
+      if (s[to] == prf) {
         return true;
       }
       if (!visited[to]) {
@@ -139,37 +140,48 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
+  ifstream cin{"test.in"};
+
   i64 n, m;
   cin >> n >> m;
   cin >> s;
 
   vv g(n + 1);
   vv p(n + 1);
-  for (i64 i = 0; i < n; i++) {
-    i64 u, v;
-    cin >> u >> v;
+  for (i64 i = 0; i < n - 1; i++) {
+    i64 uu, vv;
+    cin >> uu >> vv;
 
-    p[v].push_back(u);
-    g[u].push_back(v);
-    g[v].push_back(u);
+    uu--;
+    vv--;
+
+    p[vv].push_back(uu);
+    g[uu].push_back(vv);
+    g[vv].push_back(uu);
   }
 
-  visited.resize(n + 1, false);
-  height.resize(n + 1, 0);
-  dfs(g, 1, 0);
+  visited.resize(n, false);
+  height.resize(n, 0);
+  first.resize(n);
+  in_out.resize(n * 2);
 
   SegmentTree quer(height);
+  dfsl(g, 0, 0);
 
   while (m--) {
-    i64 u, v;
+    i64 x, y;
     char prf;
-    cin >> u >> v >> prf;
+    cin >> x >> y >> prf;
 
-    i64 a = quer.query(u, v);
-    bool ans1 = bfs(p, u, a, prf);
-    bool ans2 = bfs(p, v, a, prf);
+    i64 a = quer.query(x, y);
+    bool ans1 = bfs(p, x, a, prf);
+    bool ans2 = bfs(p, y, a, prf);
 
-    cout << (ans1 or ans2) ? '1' : '0';
+    if (ans1 or ans2) {
+      cout << 1 << " ";
+    } else {
+      cout << 0 << " ";
+    }
   }
 
   return 0;

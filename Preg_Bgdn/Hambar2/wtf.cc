@@ -26,29 +26,28 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-i32 v[1001];
-int a[1001][1001];
-int st[10001];
-short n, m;
+i16 a[1000][1000];
+int n, m;
+i16 maxsz(vec<i16> &v) {
+  i16 res = 0;
+  i16 tp, cur;
+  stack<i16> st;
 
-int maxsz() {
-  short res = 0, k = 0;
-  short tp, cur;
-
-  for (int i = 0; i < n; i++) {
-    while (k != 0 and v[st[k]] >= v[i]) {
-      tp = st[k];
-      k--;
-      short w = k == 0 ? i : i - st[k] - 1;
-      res = max(res, short(w * v[tp]));
+  for (int i = 0; i < v.size(); i++) {
+    while (!st.empty() and v[st.top()] > v[i]) {
+      tp = st.top();
+      st.pop();
+      i16 w = st.empty() ? i : i - st.top() - 1;
+      i16 h = v[tp];
+      res = max(res, i16(w * h));
     }
-    st[++k] = i;
+    st.push(i);
   }
 
-  while (k != 0) {
-    tp = st[k];
-    k--;
-    cur = v[tp] * (k == 0 ? n : n - st[k] - 1);
+  while (!st.empty()) {
+    tp = st.top();
+    st.pop();
+    cur = v[tp] * (st.empty() ? n : n - st.top() - 1);
     res = max(res, cur);
   }
 
@@ -66,14 +65,15 @@ int main() {
   cin >> n >> m;
 
   for (int i = 0; i < m; i++) {
-    int x, y;
+    i16 x, y;
     cin >> x >> y;
     x--;
     y--;
     a[x][y] = 1;
   }
 
-  int ans = 0;
+  i16 ans = 0;
+  vec<i16> v(m + 1, 0);
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
       if (a[i][j] == 0) {
@@ -82,7 +82,7 @@ int main() {
         v[j] = 0;
       }
     }
-    ans = max(ans, maxsz());
+    ans = max(ans, maxsz(v));
   }
 
   cout << ans << endl;

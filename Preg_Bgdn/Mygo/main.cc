@@ -75,7 +75,7 @@ int main() {
     n += a[i];
   }
 
-  i64 res = comb(n, a[0]);
+  i64 res = comb(n- 1, a[0]);
   for (int i = 1; i < 10; i++) {
     res = (res * comb(n - a[i - 1], a[i])) % MOD;
     n -= a[i - 1];

@@ -26,56 +26,49 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
-int dp[NMAX];
+const int NMAX = 200002;
+int n;
+vi32 g[NMAX];
+int sz[NMAX];
+
+int dfs(int crt, int p) {
+  int res = 1;
+  for (auto &c : g[crt]) {
+    if (c != p) {
+      res += dfs(c, crt);
+    }
+  }
+
+  sz[crt] = res;
+  return res;
+}
+
+int centroid(int node, int p) {
+  for (auto &c : g[node]) {
+    if (c != p && sz[c] * 2 > n) {
+      return centroid(c, node);
+    }
+  }
+
+  return node;
+}
 
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
-
-  int n;
   cin >> n;
-  int a[n];
-
-  for (int i = 0; i < n; i++) {
-    cin >> a[i];
+  for (int i = 0; i < n - 1; i++) {
+    int u, v;
+    cin >> u >> v;
+    u--, v--;
+    g[u].push_back(v);
+    g[v].push_back(u);
   }
 
-  int res = 0, p = -1;
-  for (int i = 0; i < n; i++) {
-    dp[i] = 1;
-    for (int j = i; j >= 0; j--) {
-      if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
-      }
-    }
-
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
-  }
-
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
-  for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
-    }
-  }
+  dfs(0, -1);
+  cout << centroid(0, -1) + 1 << endl;
 
   return 0;
 }

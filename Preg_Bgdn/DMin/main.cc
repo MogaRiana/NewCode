@@ -26,55 +26,55 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
-int dp[NMAX];
+const int NMAX = 102;
+int n, m, k;
+int dist[NMAX];
+
+void bfs(i64 st, vv &g) {
+  vec<bool> vis(n + 1, false);
+  deque<i64> q;
+  q.push_back(st);
+  dist[st] = 0;
+
+  while (!q.empty()) {
+    i64 u = q.front();
+    q.pop_front();
+
+    vis[u] = true;
+
+    for (auto &c : g[u]) {
+      if (!vis[c]) {
+        vis[c] = true;
+        dist[c] = dist[u] + 1;
+        q.push_back(c);
+      }
+    }
+  }
+}
 
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
+  ifstream cin{"dmin.in"};
+  ofstream cout{"dmin.out"};
 
-  int n;
-  cin >> n;
-  int a[n];
-
-  for (int i = 0; i < n; i++) {
-    cin >> a[i];
+  cin >> n >> m;
+  vv g(n + 1);
+  for (i64 i = 0; i < m; i++) {
+    i64 u, v;
+    cin >> u >> v;
+    g[u].push_back(v);
+    g[v].push_back(u);
   }
 
-  int res = 0, p = -1;
-  for (int i = 0; i < n; i++) {
-    dp[i] = 1;
-    for (int j = i; j >= 0; j--) {
-      if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
-      }
-    }
-
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
-  }
-
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
-  for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
-    }
+  cin >> k;
+  while (k--) {
+    int a, b;
+    cin >> a >> b;
+    bfs(a, g);
+    cout << dist[b] << endl;
   }
 
   return 0;

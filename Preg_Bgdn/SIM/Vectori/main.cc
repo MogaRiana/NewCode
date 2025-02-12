@@ -26,56 +26,50 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
-int dp[NMAX];
+const int NMAX = 100002;
+int n, d;
 
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
+  ifstream cin{"vectori.in"};
+  ofstream cout{"vectori.out"};
 
-  int n;
-  cin >> n;
-  int a[n];
+  cin >> n >> d;
+  vi64 a(n), b(n), c(n);
 
   for (int i = 0; i < n; i++) {
     cin >> a[i];
   }
-
-  int res = 0, p = -1;
   for (int i = 0; i < n; i++) {
-    dp[i] = 1;
-    for (int j = i; j >= 0; j--) {
-      if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
-      }
-    }
-
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
+    cin >> b[i];
   }
-
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
   for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
+    cin >> c[i];
+  }
+
+  // srt(a);
+  srt(b);
+  srt(c);
+
+  i64 ans = 0;
+  for (int i = 0; i < n; i++) {
+    int b1 = upper_bound(b.begin(), b.end(), a[i] + d) - b.begin();
+    int b2 = lower_bound(b.begin(), b.end(), a[i] - d) - b.begin();
+    int c1 = upper_bound(c.begin(), c.end(), a[i] + d) - c.begin();
+    int c2 = lower_bound(c.begin(), c.end(), a[i] - d) - c.begin();
+
+    for (int j = b2; j < b1; j++) {
+      int ll = lower_bound(c.begin(), c.end(), b[j] - d) - c.begin();
+      int rr = upper_bound(c.begin(), c.end(), b[j] + d) - c.begin();
+
+      ans += min(c1, rr) - max(c2, ll);
     }
   }
+
+  cout << ans << endl;
 
   return 0;
 }

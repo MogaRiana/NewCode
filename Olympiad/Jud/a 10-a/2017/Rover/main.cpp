@@ -4,10 +4,10 @@ using namespace std;
 
 #define endl '\n'
 
-const vector<short> dirx = {-1, 1, 0, 0};
-const vector<short> diry = {0, 0, -1, 1};
+const vector<int> dirx = {-1, 1, 0, 0};
+const vector<int> diry = {0, 0, -1, 1};
 
-bool verify(short x, short y, short n) {
+bool verify(int x, int y, int n) {
   if (x >= 0 and x < n and y >= 0 and y < n) {
     return true;
   }
@@ -15,22 +15,22 @@ bool verify(short x, short y, short n) {
   return false;
 }
 
-short solve(vector<vector<short>> &grid, short n, short g, short c) {
+int solve(vector<vector<int>> &grid, int n, int g, int c) {
   deque<pair<int, int>> q;
   q.push_back({0, 0});
   vector<vector<bool>> visit(n, vector<bool>(n, false));
-  vector<vector<short>> mark;
+  vector<vector<int>> mark;
 
   if (c == 1) {
-    mark.resize(n, vector<short>(n, 10000));
+    mark.resize(n, vector<int>(n, 10000));
     mark[0][0] = 0;
   } else if (c == 2) {
-    mark.resize(n, vector<short>(n, 0));
+    mark.resize(n, vector<int>(n, 0));
     mark[0][0] = grid[0][0];
   }
 
   while (!q.empty()) {
-    pair<short, short> cur = q.front();
+    pair<int, int> cur = q.front();
     q.pop_front();
     visit[cur.first][cur.second] = true;
 
@@ -43,7 +43,7 @@ short solve(vector<vector<short>> &grid, short n, short g, short c) {
           if (grid[x][y] >= g) {
             mark[x][y] = min(mark[x][y], mark[cur.first][cur.second]);
           } else {
-            short cc = mark[cur.first][cur.second] + 1;
+            int cc = mark[cur.first][cur.second] + 1;
             mark[x][y] = min(mark[x][y], cc);
           }
           if (!visit[x][y]) {
@@ -73,16 +73,16 @@ int main() {
   ifstream cin{"rover.in"};
   ofstream cout{"rover.out"};
 
-  short c, n, g;
+  int c, n, g;
   cin >> c >> n;
 
   if (c == 1) {
     cin >> g;
   }
 
-  vector<vector<short>> grid(n, vector<short>(n));
-  for (short i = 0; i < n; i++) {
-    for (short j = 0; j < n; j++) {
+  vector<vector<int>> grid(n, vector<int>(n));
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
       cin >> grid[i][j];
     }
   }

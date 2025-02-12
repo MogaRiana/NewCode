@@ -26,8 +26,8 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
+const int NMAX = 100002;
+int a[NMAX];
 int dp[NMAX];
 
 int main() {
@@ -35,47 +35,26 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
-
   int n;
   cin >> n;
-  int a[n];
 
   for (int i = 0; i < n; i++) {
     cin >> a[i];
   }
 
-  int res = 0, p = -1;
+  int res = 0;
   for (int i = 0; i < n; i++) {
     dp[i] = 1;
     for (int j = i; j >= 0; j--) {
       if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
+        dp[i] = max(dp[i], dp[j] + 1);
       }
     }
 
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
+    res = max(res, dp[i]);
   }
 
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
-  for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
-    }
-  }
+  cout << n - res << endl;
 
   return 0;
 }

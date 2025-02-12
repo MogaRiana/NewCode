@@ -26,56 +26,54 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
-int dp[NMAX];
+// const int NMAX = 100002;
+// int a[NMAX][NMAX];
+
+bool ver(vv &a, int l1, int c1, int l2, int c2) {
+  for (int i = l1; i <= l2; ++i) {
+    if (a[i][c1] != 1 || a[i][c2] != 1)
+      return false;
+  }
+  for (int j = c1; j <= c2; ++j) {
+    if (a[l1][j] != 1 || a[l2][j] != 1)
+      return false;
+  }
+  return true;
+}
 
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
+  ifstream cin{"chenare.in"};
+  ofstream cout{"chenare.out"};
 
-  int n;
-  cin >> n;
-  int a[n];
-
+  int n, m;
+  cin >> n >> m;
+  vv a(n, vi64(m));
   for (int i = 0; i < n; i++) {
-    cin >> a[i];
+    for (int j = 0; j < m; j++) {
+      cin >> a[i][j];
+    }
   }
 
-  int res = 0, p = -1;
+  int ans = 0;
   for (int i = 0; i < n; i++) {
-    dp[i] = 1;
-    for (int j = i; j >= 0; j--) {
-      if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
+    for (int j = 0; j < m; j++) {
+      if (a[i][j] == 1) {
+        for (int k = i; k < n; k++) {
+          for (int l = j; l < m; l++) {
+            if (a[k][l] and ver(a, i, j, k, l)) {
+              ans = max(ans, (k - i + 1) * (l - j + 1));
+            }
+          }
+        }
       }
     }
-
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
   }
 
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
-  for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
-    }
-  }
+  cout << ans << endl;
 
   return 0;
 }

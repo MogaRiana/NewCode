@@ -26,56 +26,50 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
-const int NMAX = 1002;
-bool rr[NMAX];
-int dp[NMAX];
+const int NMAX = 100002;
+int n, d;
 
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"sclm.in"};
-  ofstream cout{"sclm.out"};
+  ifstream cin{"vectori.in"};
+  ofstream cout{"vectori.out"};
 
-  int n;
-  cin >> n;
-  int a[n];
+  cin >> n >> d;
+  vi64 a(n + 1), b(n + 1), c(n + 1);
 
-  for (int i = 0; i < n; i++) {
+  for (int i = 1; i <= n; i++) {
     cin >> a[i];
   }
+  for (int i = 1; i <= n; i++) {
+    cin >> b[i];
+  }
+  for (int i = 1; i <= n; i++) {
+    cin >> c[i];
+  }
 
-  int res = 0, p = -1;
-  for (int i = 0; i < n; i++) {
-    dp[i] = 1;
-    for (int j = i; j >= 0; j--) {
-      if (a[j] < a[i]) {
-        dp[i] = max(dp[j] + 1, dp[i]);
+  srt(a);
+  srt(b);
+  srt(c);
+
+  i64 ans = 0;
+  for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= n; j++) {
+      for (int k = 1; k <= n; k++) {
+        i64 x = abs(a[i] - b[j]);
+        i64 y = abs(a[i] - c[k]);
+        i64 z = abs(b[j] - c[k]);
+
+        if (x <= d && y <= d && z <= d) {
+          ans++;
+        }
       }
     }
-
-    if (dp[i] > res) {
-      res = dp[i];
-      p = i;
-    }
   }
 
-  int x = res;
-  rr[p] = true;
-  for (int i = p - 1; i >= 0; i--) {
-    if (dp[i] == x - 1) {
-      rr[i] = true;
-      x--;
-    }
-  }
-
-  cout << res << endl;
-  for (int i = 0; i < n; i++) {
-    if (rr[i]) {
-      cout << i + 1 << " ";
-    }
-  }
+  cout << ans << endl;
 
   return 0;
 }

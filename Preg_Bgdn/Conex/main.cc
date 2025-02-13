@@ -27,59 +27,23 @@ typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
 const int NMAX = 102;
-int par[NMAX];
-int n, p, q, r;
+int n;
+int vis[NMAX];
 
-void bfs(int st, int fn, vv &g) {
-  for (int i = 0; i <= n; i++) {
-    par[i] = 0;
-  }
-
-  deque<i64> q;
+void bfs(int st, vv &g) {
+  deque<int> q;
   q.push_back(st);
 
-  par[st] = -1;
   while (!q.empty()) {
-    int u = q.front();
+    int c = q.front();
     q.pop_front();
 
-    if (u == fn)
-      break;
-
-    for (auto &v : g[u]) {
-      if (par[v] == 0) {
-        par[v] = u;
+    for (auto &v : g[c]) {
+      if (!vis[v]) {
+        vis[v] = 1;
         q.push_back(v);
       }
     }
-  }
-}
-
-vi32 path1(0), path2(0);
-void slv(int st, int fn, vi32 &path) {
-  if (st == fn) {
-    return;
-  }
-
-  slv(par[st], fn, path);
-  path.push_back(st);
-}
-
-void solve(int st, int fn, vv &g, vi32 &path) {
-  bfs(st, fn, g);
-  path.push_back(st);
-  slv(fn, st, path);
-}
-
-void print() {
-  ofstream cout{"lant1.out"};
-
-  cout << sz(path1) + sz(path2) - 1 << endl;
-  for (int i = 0; i < path1.size(); i++) {
-    cout << path1[i] << " ";
-  }
-  for (int i = 1; i < path2.size(); i++) {
-    cout << path2[i] << " ";
   }
 }
 
@@ -88,10 +52,10 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"lant1.in"};
-  ofstream cout{"lant1.out"};
+  ifstream cin{"conex.in"};
+  ofstream cout{"conex.out"};
 
-  cin >> n >> p >> q >> r;
+  cin >> n;
   vv g(n + 1);
   int u, v;
 
@@ -100,9 +64,15 @@ int main() {
     g[v].push_back(u);
   }
 
-  solve(p, r, g, path1);
-  solve(r, q, g, path2);
-  print();
+  bfs(1, g);
+  for (int i = 1; i <= n; i++) {
+    if (!vis[i]) {
+      cout << "NU" << endl;
+      return 0;
+    }
+  }
+
+  cout << "DA" << endl;
 
   return 0;
 }

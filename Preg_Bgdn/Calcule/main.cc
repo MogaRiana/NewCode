@@ -27,7 +27,8 @@ typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
 const int NMAX = 100002;
-int f[NMAX], mod[NMAX];
+const int MOD = 20011;
+int f[NMAX], pref[NMAX];
 int n, k;
 
 int bs(int a, vi64 &m) {
@@ -60,10 +61,12 @@ int main() {
     cin >> v[i];
   }
 
-  mod[0] = v[0] % k;
+  f[0]++;
+  pref[0] = v[0];
+  f[pref[0] % k]++;
   for (int i = 1; i < n; i++) {
-    mod[i] = (mod[i] + v[i]) % k;
-    f[mod[i]]++;
+    pref[i] = pref[i - 1] + v[i];
+    f[pref[i] % k]++;
   }
 
   m.push_back(v[0]);
@@ -81,11 +84,8 @@ int main() {
 
   int crt = 0;
   for (int i = 0; i < k; i++) {
-    cout << f[i] << " ";
-    crt += f[i] / 2;
+    crt = (crt + (f[i] * (f[i] - 1)) / 2) % MOD;
   }
-
-  cout << endl;
 
   cout << crt << endl;
 

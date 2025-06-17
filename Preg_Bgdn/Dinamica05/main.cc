@@ -65,10 +65,9 @@ int main() {
   dp[1][1] = 26;
 
   for (int i = 2; i <= n; i++) {
-    dp[i][0] += (dp[i - 1][0] * 26) % MOD;
-    dp[i][0] += (dp[i - 1][1] * 26) % MOD;
+    dp[i][0] = ((dp[i - 1][0] * 26) % MOD + (dp[i - 1][1] * 26) % MOD) % MOD;
 
-    dp[i][1] += (dp[i - 1][0] * 26) % MOD;
+    dp[i][1] = (dp[i - 1][0] * 26) % MOD;
   }
 
   cout << (dp[n][0] + dp[n][1]) % MOD << " ";
@@ -81,8 +80,9 @@ int main() {
   }
 
   for (int i = 2; i <= n; i++) {
-    for (int j = 1; j <= i; j++) {
-      dp1[i][j] = (dp1[i - 1][j] * 21 + dp1[i - 1][j - 1] * 5) % MOD;
+    for (int j = 1; j <= min(i, k); j++) {
+      dp1[i][j] =
+          ((dp1[i - 1][j] * 21) % MOD + (dp1[i - 1][j - 1] * 5) % MOD) % MOD;
     }
   }
 

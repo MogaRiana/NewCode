@@ -26,49 +26,43 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
+const int MOD = 4001;
+const int NMAX = 1002;
+
+int dp[NMAX][3];
+int f[3];
+
 int main() {
   ios::sync_with_stdio(false);
   cin.tie(NULL);
   cout.tie(NULL);
 
-  i64 n, x;
-  cin >> n >> x;
-  int m1 = n / 2, m2 = n - m1;
+  ifstream cin{"divtrei.in"};
+  ofstream cout{"divtrei.out"};
 
-  vi64 v1(m1), v2(m2);
-  for (int i = 0; i < m1; i++) {
-    cin >> v1[i];
-  }
-  for (int i = 0; i < m2; i++) {
-    cin >> v2[i];
-  }
+  int n, k;
+  cin >> n >> k;
 
-  vi64 sum1, sum2;
-  for (int i = 0; i < (1 << m1); i++) {
-    i64 cur = 0;
-    for (int j = 0; j < m1; j++)
-      if (i & (1 << j))
-        cur += v1[j];
-    sum1.push_back(cur);
-  }
-  for (int i = 0; i < (1 << m2); i++) {
-    i64 cur = 0;
-    for (int j = 0; j < m2; j++)
-      if (i & (1 << j))
-        cur += v2[j];
-    sum2.push_back(cur);
+  for (int i = 0; i < n; i++) {
+    int x;
+    cin >> x;
+    f[x % 3]++;
   }
 
-  srt(sum1);
-  srt(sum2);
+  dp[1][0] = f[0];
+  dp[1][1] = f[1];
+  dp[1][2] = f[2];
 
-  i64 sum = 0;
-  for (i64 s1 : sum1) {
-    sum += upper_bound(sum2.begin(), sum2.end(), x - s1) -
-           lower_bound(sum2.begin(), sum2.end(), x - s1);
+  for (int i = 2; i <= k; i++) {
+    dp[i][0] =
+        (dp[i - 1][0] * f[0] + dp[i - 1][1] * f[2] + dp[i - 1][2] * f[1]) % MOD;
+    dp[i][1] =
+        (dp[i - 1][0] * f[1] + dp[i - 1][1] * f[0] + dp[i - 1][2] * f[2]) % MOD;
+    dp[i][2] =
+        (dp[i - 1][0] * f[2] + dp[i - 1][1] * f[1] + dp[i - 1][2] * f[0]) % MOD;
   }
 
-  cout << sum << endl;
+  cout << dp[k][0] << endl;
 
   return 0;
 }

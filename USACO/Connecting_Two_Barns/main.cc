@@ -26,6 +26,17 @@ typedef vec<vi64> vv;
 typedef vec<p64> vp64;
 typedef vec<str> vstr;
 
+void dfs(const vv &g, vector<bool> &vis, vector<int> &t, int node) {
+  t.push_back(node);
+  vis[node] = true;
+
+  for (auto c : g[node]) {
+    if (!vis[c]) {
+      dfs(g, vis, t, c);
+    }
+  }
+}
+
 vi64 con(vv &g, vec<bool> &vis, i64 st) {
   vi64 res;
   deq<i64> q;
@@ -35,10 +46,10 @@ vi64 con(vv &g, vec<bool> &vis, i64 st) {
   while (!q.empty()) {
     i64 p = q.front();
     q.pop_front();
-    vis[p] = true;
     res.push_back(p);
+    vis[p] = true;
 
-    for (auto &x : g[p]) {
+    for (auto x : g[p]) {
       if (!vis[x]) {
         vis[x] = true;
         q.push_back(x);
@@ -63,6 +74,7 @@ i64 bs(vi64 &v, i64 x) {
     }
   }
 
+  l = 0, r = sz(v) - 1;
   while (l <= r) {
     i64 mid = l + (r - l) / 2;
     if (v[mid] <= x) {
@@ -73,7 +85,9 @@ i64 bs(vi64 &v, i64 x) {
     }
   }
 
-  return min(r1, r2);
+  i64 res = min(r1, r2);
+
+  return res * res;
 }
 
 int main() {
@@ -81,10 +95,13 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
+  // ifstream cin{"input.txt"};
+  // ofstream cout{"output.txt"};
+
   int t;
   cin >> t;
 
-  while (t--) {
+  for (int iii = 1; iii <= t; iii++) {
     int n, m;
     cin >> n >> m;
 
@@ -110,19 +127,24 @@ int main() {
     srt(g1);
     srt(gn);
 
-    i64 res = 1e9;
-    for (auto &x : g1) {
-      i64 d = bs(gn, x);
-      res = min(res, d);
+    i64 res = INT64_MAX;
+    for (auto x : g1) {
+      res = min(res, bs(gn, x));
     }
 
     for (int i = 2; i < n; i++) {
       if (!vis[i]) {
         vi64 v = con(g, vis, i);
-        for (auto &x : v) {
-          i64 d = bs(g1, x) + bs(gn, x);
-          res = min(res, d);
+        i64 d1 = INT64_MAX, d2 = INT64_MAX;
+
+        for (auto x : v) {
+          d1 = min(d1, bs(g1, x));
+          d2 = min(d2, bs(gn, x));
         }
+        for (auto x : v) {
+        }
+
+        res = min(res, d1 + d2);
       }
     }
 

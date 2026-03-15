@@ -31,8 +31,5 @@ int main() {
   cin.tie(NULL);
   cout.tie(NULL);
 
-  ifstream cin{"input.in"};
-  ofstream cout{"output.out"};
-
   return 0;
 }

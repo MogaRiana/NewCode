@@ -34,5 +34,30 @@ int main() {
   ifstream cin{"input.in"};
   ofstream cout{"output.out"};
 
+  i64 n;
+  cin >> n;
+
+  while (n--) {
+    i64 a, b;
+    cin >> b >> a;
+
+    for (int i = 0; i < a + 2; i++) {
+      for (int j = 0; j < b + 2; j++) {
+        if (i == 0 or i == a + 1) {
+          cout << '#';
+          continue;
+        }
+        if (j == 0 or j == b + 1) {
+          cout << '#';
+          continue;
+        }
+
+        cout << ':';
+      }
+      cout << endl;
+    }
+    cout << endl;
+  }
+
   return 0;
 }
